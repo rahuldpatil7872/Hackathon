@@ -27,7 +27,7 @@ namespace HackathonDemo.Controllers
                 new Product
                 {
                     ProductId = 12345,
-                    ProductTitle = "ASOS Knitted Swing Dress With Zip Neck",
+                    ProductTitle = "Knitted Swing Dress With Zip Neck",
                     Image =
                         "http://images.asos-media.com/products/asos-knitted-swing-dress-with-zip-neck/8011669-1-blue?$XXL$&amp;wid=513&amp;fit=constrain",
                     Price = 6000,

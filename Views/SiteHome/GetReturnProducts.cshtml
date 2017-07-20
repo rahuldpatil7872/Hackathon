@@ -1,0 +1,29 @@
+﻿@using HackathonDemo.Models
+@model IEnumerable<HackathonDemo.Models.Product>
+
+@{
+    ViewBag.Title = "GetReturnProducts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <h2>Deals of the day</h2>
+        </div>
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3">
+                    <a href="@Url.Action("ViewProduct", "Product", item)">
+                        <img src="@item.Image" style="height: 300px; width: 100%"/>
+                    </a>
+                    <p>@item.ProductTitle</p>
+                    <p>
+                        <b>@item.Price</b>
+                    </p>
+                </div>
+            }
+        </div>
+</div>
+

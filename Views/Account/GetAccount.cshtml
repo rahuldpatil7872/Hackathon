@@ -1,0 +1,107 @@
+﻿@using System.Runtime.Remoting.Messaging
+@using System.Web.UI.WebControls
+@model HackathonDemo.Models.Account
+
+@{
+    ViewBag.Title = "GetAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h4>Hi @Model.CustomerName</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <h4>Account Details</h4>
+        <dt>
+            @Html.DisplayNameFor(model => model.ShippingAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShippingAddress)
+        </dd>
+    </dl>
+
+    <h4>Order List</h4>
+
+    @foreach (var item in Model.OrderList)
+    {
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-md-2">
+                <img src="@item.Image" style="position: center; height: 100px; width: 100%" />
+            </div>
+            <div class="col-md-10">
+                <div>
+                    @Html.ActionLink("View Order Details", "ViewProduct", "Product", item, new {style="color:black"})
+                </div>
+                
+                @if (!item.IsReturned)
+                {
+                    <div>
+                        @Html.Label("Return or replace : ")
+                        @{
+                            var listItems = new List<SelectListItem>
+                            {
+                                new SelectListItem
+                                {
+                                    Text = "Wrong Item Was Sent",
+                                    Value = "Wrong Item Was Sent"
+                                },
+                                new SelectListItem
+                                {
+                                    Text = "Bought By Mistake",
+                                    Value = "Bought By Mistake"
+                                },
+                                new SelectListItem
+                                {
+                                    Text = "Incorrect Size Ordered",
+                                    Value = "Incorrect Size Ordered"
+                                },
+                                new SelectListItem
+                                {
+                                    Text = "Product No Longer Needed",
+                                    Value = "Product No Longer Needed"
+                                },
+                                new SelectListItem
+                                {
+                                    Text = "Incorrect Colour Ordered",
+                                    Value = "Incorrect Colour Ordered"
+                                }
+                            };
+                        }
+
+                        @Html.DropDownList("Return", listItems, "Select reason")
+                        
+                        @{
+                            var input = new RouteValueDictionary
+                            {
+                                {"products",Model.OrderList},
+                                {"productId", item.ProductId},
+                                {"isReturned", true}
+                            };
+                        }
+                        
+                        @using (Html.BeginForm("GetAccount", "Account", input, FormMethod.Post))
+                        {
+                            <input type="submit" value="Return"/>
+                        }
+                        
+                        <div>
+                            @Html.Label("Delivered", "Delivered", new { style = "color:green" })
+                        </div>
+
+                    </div>
+                }
+                
+                @if (item.IsReturned)
+                {
+                    <div>
+                        @Html.Label("Returned", "Returned", new { style = "color:red" })
+                    </div>
+                }
+                
+            </div>
+        </div>
+
+    }
+
+</div>

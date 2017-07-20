@@ -1,0 +1,73 @@
+﻿@model HackathonDemo.Models.Product
+
+@{
+    ViewBag.Title = "ViewProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>@Model.ProductTitle</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <img src="@Model.Image" style="position: center; top: 0px; left: 0px; height: 550px; width: 513px" />
+    </div>
+    
+    <div class="col-md-4">
+        <div style="height: auto">
+            <h4>ABOUT ME</h4>
+            <p>@Model.Details</p>
+        </div>
+
+        <div style="height: auto">
+            <h4>LOOK AFTER ME</h4>
+            <p>@Model.LookAfterMe</p>
+        </div>
+
+        <div style="height: auto">
+            <label data-bind="text: colourLabel, visible: !hideLabels">COLOUR:</label>
+            <label data-bind="text: colourLabelValue, visible: !hideLabels">@Model.Colour</label>
+        </div>
+
+        <div style="height: auto">
+            <h4>SIZE:</h4>
+
+            @{
+                var listItems= new List<SelectListItem>();
+                
+                     listItems.Add(new SelectListItem
+                     {
+                         Text = "UK 10",
+                         Value = "UK 10"
+                     });
+
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "UK 12",
+                        Value = "UK 12"
+                    });
+                 
+            }
+
+            @Html.DropDownListFor(m => m.Size, listItems, "Select Size")
+            <p> </p>
+        </div>
+
+        <div style="height: auto">
+            <label data-bind="text: PriceLabel, visible: !hideLabels">PRICE:</label>
+            <label data-bind="text: PriceLabelValue, visible: !hideLabels">@Model.Price</label>
+        </div>
+
+        <div>
+            <p>
+                <a class="btn btn-default" href="@Url.Action("GetAccount", "Account")">Add To Bag</a>
+            </p>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+

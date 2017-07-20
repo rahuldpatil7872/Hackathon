@@ -1,0 +1,76 @@
+﻿@using HackathonDemo.Models
+@model IEnumerable<HackathonDemo.Models.Product>
+
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Female", "Index", "SiteHome") |
+    @Html.ActionLink("Male", "Index", "SiteHome")
+</p>
+
+@*<head>
+    <style>
+        .container {
+            position: relative;
+            width: 100%;
+        }
+
+        .image {
+            opacity: 1;
+            display: block;
+            width: 100%;
+            height: 300px;
+            transition: .5s ease;
+            backface-visibility: hidden;
+        }
+
+        .middle {
+            transition: .5s ease;
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%)
+        }
+
+        .container:hover .image {
+            opacity: 0.3;
+        }
+
+        .container:hover .middle {
+            opacity: 1;
+        }
+
+        .text {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 14px;
+            padding: 16px 32px;
+        }
+    </style>
+</head>*@
+
+
+<div class="container">
+    <div class="row">
+        @foreach (Product item in Model)
+        {
+            <div class="col-md-4">
+                <a href="@Url.Action("ViewProduct", "Product", item)">
+                    <img src="@item.Image" style="height: 300px; width: 100%" />
+                </a>
+                
+                @*<div class="middle">
+                    @Html.ActionLink("Add To Bag", "GetBag", "Bag")
+                </div>*@
+                <p>@item.ProductTitle</p>
+                <p><b>@item.Price</b>
+                </p>
+            </div>
+        }
+    </div>
+</div>

@@ -6,24 +6,58 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+   
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <h2>Deals of the day</h2>
-        </div>
-            @foreach (var item in Model)
-            {
-                <div class="col-md-3">
-                    <a href="@Url.Action("ViewProduct", "Product", item)">
-                        <img src="@item.Image" style="height: 300px; width: 100%"/>
-                    </a>
-                    <p>@item.ProductTitle</p>
-                    <p>
-                        <b>@item.Price</b>
-                    </p>
-                </div>
-            }
-        </div>
+    img {
+        height: 300px;
+        max-width: 100%!important;
+    }
+
+    #slider > div {
+        position: absolute;
+    }
+     
+</style>
+<div class="row">
+    <div class="col-md-4">
+                @foreach (var item in Model)
+                {
+                    <a style="position: center;height: 200px" href="@Url.Action("ViewProduct", "Product", item)"><h1 style="color: black">Deals of the day</h1></a>
+                }
+    </div>
+
+    <div class="col-md-8" id="slider">
+        
+        
+            <div>
+               
+                 <img src="http://images.asos-media.com/products/asos-knitted-swing-dress-with-zip-neck/8011669-1-blue?$XXL$&amp;wid=513&amp;fit=constrain" style="height: 300px; width: 100%"/>
+            </div>
+            <div>
+                
+                <img src="http://images.asos-media.com/products/boohoo-tab-side-lace-maxi-dress/8508300-1-peach?$XXL$&amp;wid=513&amp;fit=constrain" style="height: 300px; width: 100%"/>
+
+            </div>
+        
+        
+    </div>
+
 </div>
+@section scripts{
+    <script>
+        $("#slider > div:gt(0)").hide();
+        $("#slider").height($("#slider > div > img").height());
+        setInterval(function () {
+            $('#slider > div:first')
+                .fadeOut(500)
+                .next()
+                .fadeIn(500)
+                .end()
+                .appendTo('#slider');
+        }, 3000);
+    </script>
+}
+
+
 

@@ -61,6 +61,11 @@ namespace HackathonDemo.Controllers
             return View(account);
         }
 
+        public string OpenPopup()
+        {
+            return "<h1>Check exciting deals of the day for you!</h1>";
+        }
+
         private static Product[] OrderProduct()
         {
             return new[]

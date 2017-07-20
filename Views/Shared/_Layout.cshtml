@@ -11,45 +11,93 @@
             color: white !important;
             text-decoration: none;
         }
+
+
+        .search-Text {
+            width: 100%;
+            border: solid black;
+            border-width: 1px;
+            color: #000;
+            float: left;
+            font-size: 0.75em;
+            line-height: 1em;
+            height: 29px;
+            top: 10px;
+            padding-left: 5px;
+            /*padding: 5px 39px 5px 5px;*/
+            position: relative;
+        }
+
+        .search-btn {
+            border: solid black;
+            border-width: 1px;
+            color: #000;
+            float: left;
+            font-size: 0.75em;
+            line-height: 1em;
+            height: 29px;
+            top: 10px;
+            width: 16%;
+            background-color: white !important;
+            /*padding: 5px 39px 5px 5px;*/
+            position: relative;
+            border-color: black !important;
+        }
     </style>
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <img src="~/Content/Logo3.jpg" style="height: 50px; width: 60px; margin-right: 5px " />
-        </div>
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("BrandBucket", "Index", "SiteHome", new { area = "" }, new { @class = "navbar-brand", style = "margin-right: 730px" })
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <img src="~/Content/Message.png" style="height: 20px; width: 20px; margin-left: 5px; margin-top: 15px; background-color: black; color: black " />
-                <li>@Html.ActionLink("Sign In", "Index", "SignIn")</li>
-                <li>@Html.ActionLink("My Account", "GetAccount", "Account")</li>
-            </ul>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="row col-md-12">
+
+                <div class="col-md-1">
+                    <div class="navbar-header">
+                        <img src="~/Content/Logo3.jpg" style="height: 50px; width: 60px; margin-right: 5px" />
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("BrandBucket", "Index", "SiteHome", new { area = "" }, new { @class = "navbar-brand", style = "margin-right: 730px" })
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <input type="text" placeholder="Search Products Here" class="search-Text" />
+                    <input type="button" value="Search" class="btn-default search-btn" />
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <img src="~/Content/Message.png" style="height: 20px; width: 20px; margin-left: 5px; margin-top: 15px; background-color: black; color: black" />
+                            <li>@Html.ActionLink("Sign In", "Index", "SignIn")</li>
+                            <li>@Html.ActionLink("My Account", "GetAccount", "Account")</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<p></p>
+    <p></p>
     <div class="row">
-        <div class="container text-center col-md-12 h2" >
-          
+        <div class="container text-center col-md-12 h2">
+
             <div class="col-md-3" style="background-color: #D584AD; color-primary:#FFFFFF">
-                @Html.ActionLink("Female", "Index", "SiteHome",new {@class= "a-white" })
+                @Html.ActionLink("Female", "Index", "SiteHome", new { @class = "a-white" })
             </div>
-            
+
             <div class="col-md-3" style="background-color:blue">
-                @Html.ActionLink("Male", "Index", "SiteHome",new { @class = "a-white" })
+                @Html.ActionLink("Male", "Index", "SiteHome", new { @class = "a-white" })
             </div>
         </div>
     </div>
-<p></p>
+    <p></p>
     <div class="container body-content">
 
         @RenderBody()

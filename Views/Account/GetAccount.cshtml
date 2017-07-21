@@ -10,21 +10,21 @@
 <div>
     <h4>Hi @Model.CustomerName</h4>
     <input type="button" id="btnpopup" value="Open Modal Popup" onclick="ShowModelPopUp();" />
-    
+
     <script type="text/javascript">
         ShowModelPopUp = function () {
             window.showModalDialog('/SiteHome/GetReturnProducts', "WindowPopup");
         }
     </script>
-    
+
     <input type="button" id="btnpopu" value="Open Modeless popup" onclick="ShowPopup();" />
     <script type="text/javascript">
- 
+
         ShowPopup = function () {
             window.open('/SiteHome/GetReturnProducts', "PopupWindow");
         }
-  
-    </script>  
+
+    </script>
 
     <img src="~/Content/Message.png" style="height: 20px; width: 20px; margin-left: 5px; margin-top: 15px; background-color: black; color: black " />
     <hr />
@@ -43,15 +43,15 @@
 
     @foreach (var item in Model.OrderList)
     {
-        <div style="margin-bottom: 10px;" class="row">
-            <div class="col-md-2">
+        <div style="margin-bottom: 12px; border: 1px solid gray; padding: 5px;" class="row">
+            <div class="col-md-3">
                 <img src="@item.Image" style="position: center; height: 100px; width: 100%" />
             </div>
-            <div class="col-md-10">
+            <div class="col-md-5"><br />
                 <div>
-                    @Html.ActionLink("View Order Details", "ViewProduct", "Product", item, new {style="color:black"})
+                    @Html.ActionLink("View Order Details", "ViewProduct", "Product", item, new { style = "color:black" })
                 </div>
-                
+
                 @if (!item.IsReturned)
                 {
                     <div>
@@ -88,38 +88,43 @@
                         }
 
                         @Html.DropDownList("Return", listItems, "Select reason")
-                        
-                        @{
-                            var input = new RouteValueDictionary
-                            {
-                                {"products",Model.OrderList},
-                                {"productId", item.ProductId},
-                                {"isReturned", true}
-                            };
-                        }
-                        
-                        @using (Html.BeginForm("GetAccount", "Account", input, FormMethod.Post))
-                        {
-                            <input type="submit" value="Return"/>
-                        }
-                        
-                        <div>
-                            @Html.Label("Delivered", "Delivered", new { style = "color:green" })
-                        </div>
-
                     </div>
+                            }
+            </div>
+            <div class="col-md-2"><br /><br/>
+                @{
+    var input = new RouteValueDictionary
+                    {
+                        {"products",Model.OrderList},
+                        {"productId", item.ProductId},
+                        {"isReturned", true}
+                    };
                 }
-                
+                @if (!item.IsReturned)
+                {
+                    using (Html.BeginForm("GetAccount", "Account", input, FormMethod.Post))
+                    {
+                        
+                        <input type="submit" value="Return" />
+                    }
+                }
+            </div>
+            <div class="col-md-2"><br /><br />
                 @if (item.IsReturned)
                 {
-                    <div>
-                        @Html.Label("Returned", "Returned", new { style = "color:red" })
-                    </div>
+                <div>
+                    @Html.Label("Returned", "Returned", new { style = "color:red" })
+                </div>
                 }
-                
+                else
+                {
+                <div>
+                    @Html.Label("Delivered", "Delivered", new { style = "color:green" })
+                </div>
+                }
             </div>
         </div>
 
-    }
+                    }
 
 </div>

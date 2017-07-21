@@ -43,11 +43,30 @@
 
     @foreach (var item in Model.OrderList)
     {
-        <div style="margin-bottom: 12px; border: 1px solid gray; padding: 5px;" class="row">
-            <div class="col-md-3">
+        var color = "green";
+        if (item.IsReturned)
+        {
+            color = "red";
+        }
+        <div class="row" style="border: 1px #ddd solid;background-color: #f6f6f6!important;">
+            <div class="col-md-2">
+              Add order details
+            </div>
+            <div class="col-md-4">
+                
+            </div>
+            <div class="col-md-4">
+Delivered to whome ?
+            </div>
+            <div class="col-md-2">
+                Order details and order id like <br/>ORDER # 404-4928354-2817933
+            </div>
+        </div>
+        <div style="margin-bottom: 15px; border:1px #ddd solid; border-left-width: 10px; border-left-color: @color;  padding: 5px 0 5px 0;" class="row">
+            <div class="col-md-2"><br/>
                 <img src="@item.Image" style="position: center; height: 100px; width: 100%" />
             </div>
-            <div class="col-md-5"><br />
+            <div class="col-md-6"><br />
                 <div>
                     @Html.ActionLink("View Order Details", "ViewProduct", "Product", item, new { style = "color:black" })
                 </div>
@@ -92,38 +111,45 @@
                             }
             </div>
             <div class="col-md-2"><br /><br/>
+               
+                @if (!item.IsReturned)
+                {
+                    
+                }
+            </div>
+            <div class="col-md-2">
                 @{
-    var input = new RouteValueDictionary
+                    var input = new RouteValueDictionary
                     {
                         {"products",Model.OrderList},
                         {"productId", item.ProductId},
                         {"isReturned", true}
                     };
                 }
-                @if (!item.IsReturned)
-                {
-                    using (Html.BeginForm("GetAccount", "Account", input, FormMethod.Post))
-                    {
-                        
-                        <input type="submit" value="Return" />
-                    }
-                }
-            </div>
-            <div class="col-md-2"><br /><br />
+
                 @if (item.IsReturned)
                 {
-                <div>
-                    @Html.Label("Returned", "Returned", new { style = "color:red" })
-                </div>
+                    <div>
+                        @Html.Label("Returned", "Returned", new { style = "color:red" })
+                    </div>
                 }
                 else
                 {
-                <div>
-                    @Html.Label("Delivered", "Delivered", new { style = "color:green" })
-                </div>
+                    <div>
+                        @Html.Label("Delivered", "Delivered", new { style = "color:green" })
+                    </div>
+                    using (Html.BeginForm("GetAccount", "Account", input, FormMethod.Post))
+                    {
+
+                        <input type="submit" value="Return Item" /><br/><br />
+                    }
                 }
+            
+                <input type="button" value="Write Product FeedBack" /><br /><br />
+                <input type="button" value="Write Delivery FeedBack" />
             </div>
-        </div>
+            
+            </div>
 
                     }
 

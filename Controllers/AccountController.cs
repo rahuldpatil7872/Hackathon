@@ -8,29 +8,29 @@ namespace HackathonDemo.Controllers
     public class AccountController : Controller
     {
         // GET: Account
-        public ActionResult GetAccount()
+        public ActionResult GetAccount(string customerName)
         {
             Account account;
-            //if (products.Any())
-            //{
-            //    account = new Account
-            //    {
-            //        CustomerId = 1,
-            //        CustomerName = "Aditi",
-            //        OrderList = products,
-            //        ShippingAddress = "F-56, Chinchwad, Maharashtra, India, 411019"
-            //    };
-            //}
-            //else
-            //{
-            account = new Account
-           {
-               CustomerId = 1,
-               CustomerName = "Aditi",
-               OrderList = OrderProduct(),
-               ShippingAddress = "F-56, Chinchwad, Maharashtra, India, 411019"
-           };
-            //}
+            if (customerName != null)
+            {
+                account = new Account
+                {
+                    CustomerId = 1,
+                    CustomerName = customerName,
+                    OrderList = null,
+                    ShippingAddress = "F-58, Empire Estate, Chinchwad, Maharashtra, India, 411019"
+                };
+            }
+            else
+            {
+                account = new Account
+               {
+                   CustomerId = 1,
+                   CustomerName = "Aditi",
+                   OrderList = OrderProduct(),
+                   ShippingAddress = "F-56, Chinchwad, Maharashtra, India, 411019"
+               };
+            }
 
             return View(account);
         }

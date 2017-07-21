@@ -9,24 +9,18 @@
 
 <div>
     <h4>Hi @Model.CustomerName</h4>
-    <input type="button" id="btnpopup" value="Open Modal Popup" onclick="ShowModelPopUp();" />
-
     <script type="text/javascript">
-        ShowModelPopUp = function () {
-            window.showModalDialog('/SiteHome/GetReturnProducts', "WindowPopup");
-        }
+        ShowPopup = function () {window.open('/SiteHome/GetReturnProducts', "PopupWindow");}
     </script>
-
-    <input type="button" id="btnpopu" value="Open Modeless popup" onclick="ShowPopup();" />
-    <script type="text/javascript">
-
-        ShowPopup = function () {
-            window.open('/SiteHome/GetReturnProducts', "PopupWindow");
-        }
-
-    </script>
-
-    <img src="~/Content/Message.png" style="height: 20px; width: 20px; margin-left: 5px; margin-top: 15px; background-color: black; color: black " />
+    
+    @if (Model.CustomerName != "Aditi")
+    {
+        <label style="color: purple">You have notifications!</label>
+        <a onclick="ShowPopup();">
+            <img src="~/Content/Message.png" style="height: 30px; width: 30px; margin-left: 5px;  background-color: white; color: white " />
+        </a>
+    }
+    
     <hr />
     <dl class="dl-horizontal">
         <h4>Account Details</h4>
@@ -38,119 +32,134 @@
             @Html.DisplayFor(model => model.ShippingAddress)
         </dd>
     </dl>
-
+    
+    <hr />
     <h4>Order List</h4>
-
-    @foreach (var item in Model.OrderList)
+    
+    @if (Model.OrderList != null)
     {
-        var color = "green";
-        if (item.IsReturned)
+        foreach (var item in Model.OrderList)
         {
-            color = "red";
-        }
-        <div class="row" style="border: 1px #ddd solid;background-color: #f6f6f6!important;">
-            <div class="col-md-2">
-              Add order details
+            var color = "green";
+            if (item.IsReturned)
+            {
+                color = "red";
+            }
+            <div class="row" style="border: 1px #ddd solid; background-color: #f6f6f6 !important;">
+                <div class="col-md-2">
+                    Order details:
+                    <br/>
+                    Delivered Yesterday
+
+                </div>
+                <div class="col-md-4">
+                    @item.ProductTitle
+                </div>
+                <div class="col-md-4">
+                    Delivered to whome ?
+                    <br/>
+                    @Model.CustomerName
+                </div>
+                <div class="col-md-2">
+                    OrderId :
+                    <br/> #404-4928354-@item.ProductId
+
+                </div>
             </div>
-            <div class="col-md-4">
-                
-            </div>
-            <div class="col-md-4">
-Delivered to whome ?
-            </div>
-            <div class="col-md-2">
-                Order details and order id like <br/>ORDER # 404-4928354-2817933
-            </div>
-        </div>
-        <div style="margin-bottom: 15px; border:1px #ddd solid; border-left-width: 10px; border-left-color: @color;  padding: 5px 0 5px 0;" class="row">
-            <div class="col-md-2"><br/>
-                <img src="@item.Image" style="position: center; height: 100px; width: 100%" />
-            </div>
-            <div class="col-md-6"><br />
-                <div>
-                    @Html.ActionLink("View Order Details", "ViewProduct", "Product", item, new { style = "color:black" })
+            <div style="margin-bottom: 15px; border: 1px #ddd solid; border-left-width: 10px; border-left-color: @color; padding: 5px 0 5px 0;" class="row">
+                <div class="col-md-2"><br/>
+                    <img src="@item.Image" style="position: center; height: 100px; width: 100%"/>
+                </div>
+                <div class="col-md-6"><br/>
+                    <div>
+                        @Html.ActionLink("View Order Details", "ViewProduct", "Product", item, new {style = "color:black"})
+                        <br/>
+                    </div>
+
+                    @if (!item.IsReturned)
+                    {
+                        <div>
+                            @Html.Label("Return or replace : ")
+                            @{
+                                var listItems = new List<SelectListItem>
+                                {
+                                    new SelectListItem
+                                    {
+                                        Text = "Wrong Item Was Sent",
+                                        Value = "Wrong Item Was Sent"
+                                    },
+                                    new SelectListItem
+                                    {
+                                        Text = "Bought By Mistake",
+                                        Value = "Bought By Mistake"
+                                    },
+                                    new SelectListItem
+                                    {
+                                        Text = "Incorrect Size Ordered",
+                                        Value = "Incorrect Size Ordered"
+                                    },
+                                    new SelectListItem
+                                    {
+                                        Text = "Product No Longer Needed",
+                                        Value = "Product No Longer Needed"
+                                    },
+                                    new SelectListItem
+                                    {
+                                        Text = "Incorrect Colour Ordered",
+                                        Value = "Incorrect Colour Ordered"
+                                    }
+                                };
+                            }
+
+                            @Html.DropDownList("Return", listItems, "Select reason")
+                        </div>
+                    }
+                </div>
+                <div class="col-md-2"><br/><br/>
+
+                    @if (!item.IsReturned)
+                    {
+
+                    }
+                </div>
+                <div class="col-md-2">
+                    @{
+                        var input = new RouteValueDictionary
+                        {
+                            {"products", Model.OrderList},
+                            {"productId", item.ProductId},
+                            {"isReturned", true}
+                        };
+                    }
+
+                    @if (item.IsReturned)
+                    {
+                        <div>
+                            @Html.Label("Returned", "Returned", new {style = "color:red"})
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            @Html.Label("Delivered", "Delivered", new {style = "color:green"})
+                        </div>
+                        using (Html.BeginForm("GetAccount", "Account", input, FormMethod.Post))
+                        {
+
+                            <input type="submit" value="Return Item"/>
+                            <br/>
+                            <br/>
+                        }
+                    }
+
+                    <input type="button" value="Write Product FeedBack"/><br/><br/>
+                    <input type="button" value="Write Delivery FeedBack"/>
                 </div>
 
-                @if (!item.IsReturned)
-                {
-                    <div>
-                        @Html.Label("Return or replace : ")
-                        @{
-                            var listItems = new List<SelectListItem>
-                            {
-                                new SelectListItem
-                                {
-                                    Text = "Wrong Item Was Sent",
-                                    Value = "Wrong Item Was Sent"
-                                },
-                                new SelectListItem
-                                {
-                                    Text = "Bought By Mistake",
-                                    Value = "Bought By Mistake"
-                                },
-                                new SelectListItem
-                                {
-                                    Text = "Incorrect Size Ordered",
-                                    Value = "Incorrect Size Ordered"
-                                },
-                                new SelectListItem
-                                {
-                                    Text = "Product No Longer Needed",
-                                    Value = "Product No Longer Needed"
-                                },
-                                new SelectListItem
-                                {
-                                    Text = "Incorrect Colour Ordered",
-                                    Value = "Incorrect Colour Ordered"
-                                }
-                            };
-                        }
-
-                        @Html.DropDownList("Return", listItems, "Select reason")
-                    </div>
-                            }
-            </div>
-            <div class="col-md-2"><br /><br/>
-               
-                @if (!item.IsReturned)
-                {
-                    
-                }
-            </div>
-            <div class="col-md-2">
-                @{
-                    var input = new RouteValueDictionary
-                    {
-                        {"products",Model.OrderList},
-                        {"productId", item.ProductId},
-                        {"isReturned", true}
-                    };
-                }
-
-                @if (item.IsReturned)
-                {
-                    <div>
-                        @Html.Label("Returned", "Returned", new { style = "color:red" })
-                    </div>
-                }
-                else
-                {
-                    <div>
-                        @Html.Label("Delivered", "Delivered", new { style = "color:green" })
-                    </div>
-                    using (Html.BeginForm("GetAccount", "Account", input, FormMethod.Post))
-                    {
-
-                        <input type="submit" value="Return Item" /><br/><br />
-                    }
-                }
-            
-                <input type="button" value="Write Product FeedBack" /><br /><br />
-                <input type="button" value="Write Delivery FeedBack" />
-            </div>
-            
             </div>
 
-                    }
+        }
+    }
+    
 
 </div>

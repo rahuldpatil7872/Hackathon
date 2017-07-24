@@ -19,31 +19,54 @@
     }
      
 </style>
-<div class="row">
-    <div class="col-md-4">
-                @foreach (var item in Model)
-                {
-                    <a style="position: center;height: 200px" href="@Url.Action("ViewProduct", "Product", item)"><h1 style="color: black">Deals of the day</h1></a>
-                }
-    </div>
 
-    <div class="col-md-8" id="slider">
-        
-        
-            <div>
-               
-                 <img src="http://images.asos-media.com/products/asos-knitted-swing-dress-with-zip-neck/8011669-1-blue?$XXL$&amp;wid=513&amp;fit=constrain" style="height: 300px; width: 100%"/>
+    
+        @foreach (var item in Model)
+        {
+            <div class="row" style="background-image: url('../Content/background.jpg')" >
+                <div class="col-md-4">
+                    <br />
+                    <br />
+                    <br />
+                    <h2 style="color: black; font-style: italic">BrandBucket Fashion</h2>
+                    <h4 style="color: black">Your fashion and style destination</h4>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <a style="position: center; height: 200px" href="@Url.Action("ViewProduct", "Product", item)">
+
+                        <h2 style="color: cornflowerblue; font-style: italic">Exciting Deals For You!</h2>
+                    </a>
+
+                    <h4 style="color: black">July 26th - 29th</h4>
+                </div>
+                <div class="col-md-5" id="slider">
+                    <div>
+                        <img src="http://images.asos-media.com/products/asos-knitted-swing-dress-with-zip-neck/8011669-1-blue?$XXL$&amp;wid=513&amp;fit=constrain" style="height: 350px; width: 80%" />
+                    </div>
+                    
+                    <div>
+                        <img src="http://images.asos-media.com/products/boohoo-tab-side-lace-maxi-dress/8508300-1-peach?$XXL$&amp;wid=513&amp;fit=constrain" style="height: 350px; width: 80%" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <br/>
+                    <br />
+                    <br />
+                    <h2 style="color: palevioletred; font-style: italic">Women's Clothing</h2>
+                    <h2 style="color: black; font-style: normal">Free delivery</h2>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <a style="position: center; height: 200px" href="@Url.Action("ViewProduct", "Product", item)">
+                        <h4 style="color: black; font-style: normal">Know more></h4>
+                    </a>
+                </div>
             </div>
-            <div>
-                
-                <img src="http://images.asos-media.com/products/boohoo-tab-side-lace-maxi-dress/8508300-1-peach?$XXL$&amp;wid=513&amp;fit=constrain" style="height: 300px; width: 100%"/>
+         }
 
-            </div>
-        
-        
-    </div>
-
-</div>
 @section scripts{
     <script>
         $("#slider > div:gt(0)").hide();
